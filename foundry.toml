@@ -1,0 +1,145 @@
+[profile.default]
+# 基础配置
+src = "src"
+out = "out"
+libs = ["lib"]
+test = "test"
+script = "script"
+
+# Solidity版本配置
+solc = "0.8.19"
+auto_detect_solc = false
+optimizer = true
+optimizer_runs = 200
+via_ir = false
+
+# 测试配置
+verbosity = 2
+fuzz_runs = 1000
+fuzz_max_test_rejects = 65536
+
+# 库映射
+remappings = [
+    "@openzeppelin/=lib/openzeppelin-contracts/",
+    "@forge-std/=lib/forge-std/",
+    "ds-test/=lib/forge-std/lib/ds-test/src/",
+]
+
+# Gas配置
+gas_limit = 30000000
+gas_price = 1000000000  # 1 gwei
+
+# RPC URLs
+[rpc_endpoints]
+mainnet = "${MAINNET_RPC_URL}"
+sepolia = "${SEPOLIA_RPC_URL}"
+polygon = "${POLYGON_RPC_URL}"
+mumbai = "${MUMBAI_RPC_URL}"
+arbitrum = "${ARBITRUM_RPC_URL}"
+optimism = "${OPTIMISM_RPC_URL}"
+base = "${BASE_RPC_URL}"
+anvil = "http://127.0.0.1:8545"
+hardhat = "http://127.0.0.1:8545"
+
+# Etherscan API配置
+[etherscan]
+mainnet = { key = "${ETHERSCAN_API_KEY}" }
+sepolia = { key = "${ETHERSCAN_API_KEY}" }
+polygon = { key = "${POLYGONSCAN_API_KEY}" }
+mumbai = { key = "${POLYGONSCAN_API_KEY}" }
+arbitrum = { key = "${ARBISCAN_API_KEY}" }
+optimism = { key = "${OPTIMISTIC_ETHERSCAN_API_KEY}" }
+base = { key = "${BASESCAN_API_KEY}" }
+
+# 格式化配置
+[fmt]
+line_length = 120
+tab_width = 4
+bracket_spacing = true
+int_types = "long"
+multiline_func_header = "all"
+quote_style = "double"
+number_underscore = "thousands"
+single_line_statement_blocks = "preserve"
+
+# 文档生成配置
+[doc]
+out = "docs"
+title = "SimpleNFT Documentation"
+generate_book = true
+ignore = ["**/test/**"]
+
+# 网络特定配置
+[profile.mainnet]
+optimizer_runs = 999999
+via_ir = true
+
+[profile.testnet]
+optimizer_runs = 200
+fuzz_runs = 256
+
+[profile.local]
+optimizer = false
+optimizer_runs = 1
+verbosity = 3
+
+[profile.ci]
+optimizer_runs = 10000
+fuzz_runs = 10000
+verbosity = 1
+
+[profile.deep]
+fuzz_runs = 50000
+invariant_runs = 256
+invariant_depth = 32
+
+# 部署配置（特定于环境）
+[profile.production]
+optimizer = true
+optimizer_runs = 999999
+via_ir = true
+auto_detect_solc = false
+
+[profile.development]
+optimizer = false
+verbosity = 3
+gas_limit = 100000000
+
+# Coverage配置
+[coverage]
+exclude = [
+    "test/**",
+    "script/**",
+    "lib/**"
+]
+
+# 依赖管理
+[dependencies]
+forge-std = "1.7.3"
+openzeppelin-contracts = "4.9.3"
+
+# 编译器警告配置
+[compiler]
+ignore_error_codes = [
+    2018, # 未使用的函数参数
+    5574  # 未使用的合约变量
+]
+
+# 缓存配置
+[cache]
+contracts = true
+
+# 安全配置
+[invariant]
+runs = 256
+depth = 15
+fail_on_revert = false
+call_override = false
+dictionary_weight = 40
+include_storage = true
+include_push_bytes = true
+
+# 额外的工具配置
+[extra]
+sizes = true
+names = false
